@@ -1,0 +1,454 @@
+<extend name="Layout/shop" />
+
+<block name="breadcrumb">
+	<ul class="breadcrumb">
+		<li>
+			<a href="{:U('/index')}">
+				<i class="fa fa-home"></i>
+			</a>
+		</li>
+		<li>
+			<a href="javascript:;">结账</a>
+		</li>
+	</ul>
+</block>
+
+<block name="content">
+	<div id="content" class="col-sm-12">      <h1>结账</h1>
+      <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+            <a class="accordion-toggle collapsed" data-parent="#accordion" data-toggle="collapse" href="#collapse-shipping-address" aria-expanded="false">第 1 步 货运地址 <i class="fa fa-caret-down"></i></a>
+            </h4>
+          </div>
+          <!-- <div class="panel-collapse collapse" id="collapse-shipping-address"> -->
+          <div id="collapse-shipping-address" class="panel-collapse collapse in" aria-expanded="true" style="">
+            <div class="panel-body">
+	            <div class="radio">
+	            <label>
+	              <input checked="radio" value="existing" name="shipping_address" type="radio">
+	              使用现存地址</label>
+		          </div>
+		          <div id="shipping-existing" style="display: block;">
+		            <select class="form-control" name="address_id" id="select-address_list">
+		            </select>
+		          </div>
+		          <div class="radio">
+	            	<label>
+	                  <input value="new" name="shipping_address" type="radio">
+	                  添加一个新地址
+	                </label>
+	              </div>
+	              <br>
+	            <form class="form-horizontal" id="form-address" method="post" action="">
+	            	<input type="hidden" name="operate" value="addAddress">
+	              <div style="" id="shipping-new">
+	                <div class="form-group required">
+	                  <label for="input-shipping-firstname" class="col-sm-2 control-label">您的姓名</label>
+	                  <div class="col-sm-10">
+	                    <input class="form-control" id="input-shipping-name" placeholder="您的姓名" value="" name="name" type="text">
+	                  </div>
+	                </div>
+	                <div data-sort="1" class="form-group required custom-field">
+	                  <label for="input-shipping-custom-field1" class="col-sm-2 control-label">手机号码</label>
+	                  <div class="col-sm-10">
+	                    <input class="form-control" id="input-shipping-custom-field1" placeholder="手机号码" value="" name="telephone" type="text">
+	                  </div>
+	                </div><div class="form-group">
+	                  <label for="input-shipping-company" class="col-sm-2 control-label">公司名称</label>
+	                  <div class="col-sm-10">
+	                    <input class="form-control" id="input-shipping-company" placeholder="公司名称" value="" name="company" type="text">
+	                  </div>
+	                </div>
+	                <div class="form-group required">
+	                  <label for="input-shipping-country" class="col-sm-2 control-label">省/直辖市</label>
+	                  <div class="col-sm-2">
+	                    <select class="form-control" id="select-region_level_1" data-level="1" name="country_id">
+	                    </select> 
+	                  </div>
+	                  <div class="col-sm-2">
+	                    <select class="form-control" id="select-region_level_2" data-level="2" name="zone_id">
+	                    	<option value="-1"> --- 请选择 --- </option>
+	                    </select> 
+	                  </div>
+
+	                  <div class="col-sm-2">
+	                    <select class="form-control" id="select-region_level_3" data-level="3" name="city_id">
+	                    	<option value="-1"> --- 请选择 --- </option>
+	                    </select>
+	                  </div>
+	                  <div class="col-sm-4">
+	                    <input class="form-control" id="input-shipping-address-1" placeholder="地址" value="" name="address" type="text">
+	                  </div>
+	                </div>
+	                <div class="form-group">
+	                  <label for="input-shipping-postcode" class="col-sm-2 control-label">邮编</label>
+	                  <div class="col-sm-10">
+	                    <input class="form-control" id="input-shipping-postcode" placeholder="邮编" value="" name="post_code" type="text">
+	                  </div>
+	                </div>                                        
+	             </div>
+	                  <div class="buttons clearfix">
+	                    <div class="pull-right">
+	                      <input class="btn btn-primary" data-loading-text="正在加载..." id="button-shipping-address" value="继续" type="button">
+	                  </div>
+	              </div>
+	            </form>          
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title"><a class="accordion-toggle collapsed" data-parent="#accordion" data-toggle="collapse" href="#collapse-shipping-method" aria-expanded="false">第 2 步 货运方式 <i class="fa fa-caret-down"></i></a></h4>
+          </div>
+          <div id="collapse-shipping-method" class="panel-collapse collapse in" aria-expanded="true" style="">
+           	<div class="panel-body"><p id="p-select-shipping">请选择一个货运方式。</p>
+          	
+          </div>
+
+          <p><strong>添加订单备注</strong></p>
+          <p>
+            <textarea class="form-control" rows="8" name="comment"></textarea>
+          </p>
+          <div class="buttons">
+            <div class="pull-right">
+              <input class="btn btn-primary" data-loading-text="正在加载..." id="button-shipping-method" value="继续" type="button">
+            </div>
+          </div>
+          </div>
+         </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title"><a class="accordion-toggle collapsed" data-parent="#accordion" data-toggle="collapse" href="#collapse-payment-method" aria-expanded="false">第 3 步 支付方式 <i class="fa fa-caret-down"></i></a></h4>
+          </div>
+          <div id="collapse-payment-method" class="panel-collapse collapse in" aria-expanded="true" style="">
+           	<div class="panel-body">
+	           	<p id="p-select-payment">请选择一个支付方式。</p>
+	          	
+	          	<p><strong>添加订单备注</strong></p>
+	          	<p>
+	            <textarea class="form-control" rows="8" name="comment"></textarea>
+	          	</p>
+          <div class="buttons">
+            <div class="pull-right">我已经阅读并同意 <a alt="条款及条件" href="http://php.kang.com/test/s/index.php?route=information/information/agree&amp;information_id=5" class="colorbox"><b>条款及条件</b></a> 条款        <input value="1" name="agree" type="checkbox">
+                  &nbsp;
+              <input class="btn btn-primary" data-loading-text="正在加载..." id="button-payment-method" value="继续" type="button">
+            </div>
+          </div>
+          </div>
+         </div>
+        </div>
+
+
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title"><a class="accordion-toggle" data-parent="#accordion" data-toggle="collapse" href="#collapse-checkout-confirm" aria-expanded="true">第 4 步 确认订单 <i class="fa fa-caret-down"></i></a></h4>
+          </div>
+          <div id="collapse-checkout-confirm" class="panel-collapse collapse in" aria-expanded="true" style="">
+                      <div class="panel-body"><div class="table-responsive">
+            <table class="table table-bordered table-hover" id="table-confirm-order">
+              <thead>
+                <tr>
+                  <td class="text-left">商品名称</td>
+                  <td class="text-left">型号</td>
+                  <td class="text-right">数量</td>
+                  <td class="text-right">价格</td>
+                  <td class="text-right">合计</td>
+                </tr>
+              </thead>
+			  <tbody>
+			  	
+			  </tbody>
+
+			  </tbody>
+              <tfoot>
+                <tr>
+                  <td class="text-right" colspan="4"><strong>商品总额:</strong></td>
+                  <td class="text-right">￥<span id="span-goods_total"></span></td>
+                </tr>
+                <tr>
+                  <td class="text-right" colspan="4"><strong><span id="span-shipping_method">免运费</span></strong></td>
+                  <td class="text-right">￥<span id="span-shipping_price">0</span></td>
+                </tr>
+                <tr>
+                  <td class="text-right" colspan="4"><strong>订单总额:</strong></td>
+                  <td class="text-right">￥<span id="span-order_total"></span></td>
+                </tr>
+               </tfoot>
+              
+            </table>
+          </div>
+          <div class="buttons">
+            <div class="pull-right">
+              <button data-loading-text="正在加载..." class="btn btn-primary" id="button-confirm">提交订单</button>
+            </div>
+          </div>
+          <script type="text/javascript"></script>
+          </div>
+         </div>
+        </div>
+      </div>
+    </div>
+</block>
+
+<block name="appendJS">
+<script>
+	$(':radio[name=shipping_address][value=new]').click(function(){
+		$('#shipping-new').slideDown();
+	});
+	$(':radio[name=shipping_address][value=existing]').click(function(){
+		$('#shipping-new').slideUp();
+	});
+
+	/**
+	 * 获取地区的下拉列表
+	 * @param  {[type]} region_id [地区的parent_id值]
+	 * @param  {Number} level     [级别]
+	 * @return {[type]}           [description]
+	 */
+	function getRegion(region_id,level=0){
+		
+		var url = '{:U('/ajax')}';
+		var data = {
+			'operate' : 'getRegion',
+			'level' : level,
+			'region_id' : region_id,
+		};
+		$.get(url,data,function(response){
+			if(response.error == 0){
+				//更新级别为1的地区select
+				var nextLevel = level + 1;
+				$('#select-region_level_'+nextLevel).empty();
+				if(level == 1){
+					$('#select-region_level_3').empty();
+				}
+				$.each(response.rows,function(i,row){
+					//拼凑成option字符串
+					var optionHtml = '<option value="' + row.region_id + '">' + row.title + '</option>';
+					$('#select-region_level_' + nextLevel).append(optionHtml);
+				});
+			}else{
+				console.log(response.errorInfo);
+			}
+		},'json');
+	}
+
+	//初始化第一级
+	$(function(){
+		getRegion(0,0);
+	});
+
+	//change改变事件
+	$('select[id^=select-region_level_][level!=3]').change(function(evt){
+		var currRegionID = $(this).val();
+		//利用该ID获取夏季地区列表
+		getRegion(currRegionID,$(this).data('level'));
+	});
+
+	//表单提交
+	//使用序列化的方式提交表单数据
+	$('#button-shipping-address').click(function(evt){
+		var url = '{:U('/ajax')}';
+		//operate=addAddress&name=safa&telephone=dafaf&company=dafeaf&country_id=3&zone_id=36&city_id=412&address=afaef&post_code=da
+		var data = $('#form-address').serialize();//表单元素序列化
+		// console.log($('#form-address'));//获取的是一个数据,里面存的对象;
+		//发送ajax请求
+		$.post(url,data,function(response){
+			if(response.error == 0){
+				//数据表查询数据,获取的数据展示到地址下拉列表栏目
+				// getAddress();
+				//重置表单
+				$('#form-address')[0].reset;
+			}else{
+				console.log(response.errorInfo);
+			}
+		},'json');
+	});
+</script>
+<script>
+	//ajax获取地址信息
+	function getAddress(){
+		var url = '{:U('/ajax')}';
+		data = {
+			operate : 'getAddress',
+		};
+		$.get(url,data,function(response){
+			if(response.error == 0){
+				// console.log(response);
+				//拼接地址信息到select-address_list
+				//清空已存在的
+				$('#select-address_list').empty();
+				$.each(response.rows,function(i,row){
+					var optionHtml = '<option value="' + row.address_id + '"';
+
+					if(row.is_default == 1){
+						optionHtml += 'selected>';
+					} else {
+						optionHtml += '>';
+					}
+
+					optionHtml += row.country_title + '-' + row.zone_title + '-' + row.city_title + '-' + row.company + '-' + row.address + '&nbsp;&nbsp;' + row.name + '&nbsp;&nbsp;' + row.telephone;
+
+					$('#select-address_list').append(optionHtml);
+				});
+				//让radio存在时的单选按钮被选中
+				$(':radio[name=shipping_address][value=existing]').prop('checked',true);
+				//让shipping-new隐藏
+				$('#shipping-new').hide();
+			}else{
+				$(':radio[name=shipping_address][value=new]').prop('checked',true);
+				// 单选按钮绑定了点击事件,所有没有关系
+				$('#shipping-new').show();
+				console.log(response.errorInfo);
+			}
+		},'json');
+	}
+
+	$(function(){
+		getAddress();
+	});
+</script>
+
+<script>
+	//获取配送信息
+	$(function(){
+		var url = '{:U('ajax')}';
+		var data = {
+			operate : 'getShipping',
+		};
+		$.get(url,data,function(response){
+			if(response.error == 0){
+				console.log(response.rows);
+				html = '';
+				$.each(response.rows,function(i,row){
+					html += '<p><strong>' + row.title + '</strong></p>';
+					html += '<div class="radio"><label><input value="' + row.shipping_id + '" ';
+					html += 'name="shipping_method" type="radio"';
+					html += ' data-price="' + row.price + '" data-title="' + row.title + '" id="radio-shipping_' + i + '" ';
+					if(row.is_default == 1){
+						html += 'selected';
+					}
+					html += '>' + row.title + ' - ￥' + row.price + '</label>';
+				});
+
+				$('#p-select-shipping').after(html);
+
+				//***************上一段代码生成后,才可以绑定点击事件***************//
+				//
+				//根据运送方式的不同,绑定点击事件,确定订单费用
+				$(':radio[name=shipping_method]').click(function(evt){
+					var price = $(this).data('price');
+					var title = $(this).data('title');
+					$('#span-shipping_method').empty().text(title);
+					$('#span-shipping_price').empty().text(price);
+
+					//计算总价
+					var total = Number($('#span-goods_total').text()) + Number($('#span-shipping_price').text());
+					$('#span-order_total').text(total);
+				});
+
+			}else{
+				console.log(response.errorInfo);
+			}
+		},'json');
+	});
+
+	//获取支付方式
+	$(function(){
+		var url = '{:U('ajax')}';
+		var data = {
+			operate : 'getPayment',
+		};
+
+		$.get(url,data,function(response){
+			if(response.error == 0){
+				var html = '';
+				$.each(response.rows,function(i,row){
+					html += '<div class="radio"><label><input value="' + row.payment_id + '"';
+					html += 'name="payment_method" type="radio">' + row.title + '</label></div>';
+				});
+				$('#p-select-payment').after(html);
+				 
+			}else{
+				console.log(response.errorInfo);
+			}
+		},'json');
+	});
+</script>
+
+<script>
+	//确认购物车信息
+	$(function(){
+		var url = '{:U('ajax')}';
+		var data = {
+			operate : 'getCart',
+		}
+		$.get(url,data,function(response){
+			if(response.error == 0){
+				// console.log(response.goods_list);
+				console.log(response.cart_info);
+				var goods_list = response.goods_list;
+				var cart_info = response.cart_info;
+				
+				//拼接tr
+				trHtml = '';
+				$.each(goods_list,function(i,row){
+					trHtml += '<tr><td class="text-left"><a href="' + row.goods_url + '">' + row.name + '</a></td>';
+					trHtml += '<td class="text-right">';
+					//遍历出其型号
+					$.each(row.option_list,function(ii,option){
+						trHtml += option.ga_title + '-' + option.ao_title + '<br>';
+					});
+					trHtml += '</td>';
+					trHtml += '<td class="text-right">' + row.buy_quantity + '</td>'
+					trHtml += '<td class="text-left">' + row.price + '</td>';
+					trHtml += '<td class="text-right">' + row.price * row.buy_quantity + '</td></tr>'
+					trHtml += ''
+					trHtml += ''
+				});	
+
+				$('#table-confirm-order>tbody').empty().append(trHtml);
+				$('#span-goods_total').text(cart_info.total_price);
+				var order_total = cart_info.total_price + Number($('#span-shipping_price').text());
+				$('#span-order_total').text(order_total);
+				
+			}else{
+				console.log(response.errorInfo);
+			}
+		},'json');
+	});
+  			  
+</script>
+
+<script>
+	//生成订单,整个文档生成完成,包括各种ajax请求填充数据,完成
+	$('#button-confirm').click(function(evt){
+		var orderForm = new FormData();
+		//将数据加入orderForm
+		orderForm.append('address_id',$('#select-address_list').val());
+		orderForm.append('shipping_method',$('input[name=shipping_method]:checked').val());
+		orderForm.append('payment_method',$('input[name=payment_method]:checked').val());
+
+		var url = '{:U('/checkout')}';
+		//ajax发出请求
+		$.ajax({
+			type : 'post',
+			url : url,
+			data : orderForm,
+			success : function(response){
+				if(response.error == 0){
+					console.log('订单成功');
+				}else{
+					console.log(response.errorInfo);
+				}
+			},
+			dataType : 'json',
+			processData : false,
+			contentType : false,
+		});
+	});
+
+</script>
+</block>
